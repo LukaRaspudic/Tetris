@@ -15,9 +15,14 @@ class Main:
 
         self.next_shapes = [choice(list(tetrominos.keys())) for shape in range (3)]
 
-        self.game = Game(self.get_next_shape)
+        self.game = Game(self.get_next_shape, self.update_score)
         self.score = Score()
-        self.preview = Preview(self.next_shapes)
+        self.preview = Preview()
+
+    def update_score(self, lines, score, level):
+        self.score.lines = lines
+        self.score.score = score
+        self.score.level = level
 
     def get_next_shape(self):
         next_shape = self.next_shapes.pop(0)
@@ -34,7 +39,7 @@ class Main:
             self.display_surface.fill(gray)
             self.game.run()
             self.score.run()
-            self.preview.run()
+            self.preview.run(self.next_shapes)
             pygame.display.update()
             self.clock.tick()
 
