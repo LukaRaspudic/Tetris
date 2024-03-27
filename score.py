@@ -7,7 +7,7 @@ class Score:
         self.rect = self.surface.get_rect(bottomright = (window_width - padding, window_height - padding))
         self.display_surface = pygame.display.get_surface()
 
-        self.font = pygame.font.Font("/home/raspudil/workspace/github.com/Revan68/Tetris/images/pixel-operator.ttf", 30)
+        self.font = pygame.font.Font("ADD YOUR FILE PATH FOR THE FONT IN THE IMAGES FOLDER TITLED pixel-operator.ttf", 30)
 
         self.increment_height = self.surface.get_height() / 3
 

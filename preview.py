@@ -9,7 +9,7 @@ class Preview:
         self.rect = self.surface.get_rect(topright = (window_width - padding, padding))
         self.display_surface = pygame.display.get_surface()
         
-        self.shape_surfaces = {shape: load(f'/home/raspudil/workspace/github.com/Revan68/Tetris/images/{shape}.png').convert_alpha() for shape in tetrominos.keys()}
+        self.shape_surfaces = {shape: load(f'ADD YOUR FILE PATH HERE THAT LEADS TO IMAGES/images/{shape}.png').convert_alpha() for shape in tetrominos.keys()}
 
         self.fragment_height = self.surface.get_height() / 3
 
