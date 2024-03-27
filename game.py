@@ -5,11 +5,12 @@ from timer import Timer
 
 class Game:
     
-    def __init__(self):
+    def __init__(self, get_next_shape):
         self.surface = pygame.Surface((game_width, game_height))
         self.display_surface = pygame.display.get_surface()
         self.rect = self.surface.get_rect(topleft = (padding, padding))
         self.sprites = pygame.sprite.Group()
+        self.get_next_shape= get_next_shape
 
         self.field_data = [[0 for x in range(collumns)] for y in range(rows)]
         self.tetromino = Tetromino(
@@ -21,7 +22,8 @@ class Game:
 
         self.timers = {
             'vertical move': Timer(update_start_speed, True, self.move_down),
-            'horizontal move': Timer(move_wait_time)
+            'horizontal move': Timer(move_wait_time),
+            'rotate': Timer(rotate_wait_time)
         }
         self.timers['vertical move'].activate()
 
@@ -51,14 +53,39 @@ class Game:
             if keys[pygame.K_RIGHT]:
                 self.tetromino.move_horizontal(1)
                 self.timers['horizontal move'].activate()
+        
+        if not self.timers['rotate'].active:
+            if keys[pygame.K_UP]:
+                self.tetromino.rotate()
+                self.timers['rotate'].activate()
     
     def create_new_tetromino(self):
+        self.check_finished_rows()
         self.tetromino = Tetromino(
-            choice(list(tetrominos.keys())), 
+            self.get_next_shape(), 
             self.sprites, 
             self.create_new_tetromino,
             self.field_data
             )
+        
+    def check_finished_rows(self):
+        delete_rows = []
+        for i, row in enumerate(self.field_data):
+            if all(row):
+                delete_rows.append(i)
+        
+        if delete_rows:
+            for delete_row in delete_rows:
+                for block in self.field_data[delete_row]:
+                    block.kill()
+                for row in self.field_data:
+                    for block in row:
+                        if block and block.pos.y < delete_row:
+                            block.pos.y += 1
+            
+        self.field_data = [[0 for x in range(collumns)] for y in range(rows)]
+        for block in self.sprites:
+            self.field_data[int(block.pos.y)][int(block.pos.x)] = block
 
     def run(self):
         self.input()
@@ -94,10 +121,17 @@ class Block(pygame.sprite.Sprite):
             return True
         if y >= 0 and field_data[y][int(self.pos.x)]:
             return True
+        
+    def rotate(self, pivot_pos):
+        distance = self.pos - pivot_pos
+        rotated = distance.rotate(90)
+        new_pos = pivot_pos + rotated
+        return new_pos
 
 class Tetromino:
 
     def __init__(self, shape, group, create_new_tetromino, field_data):
+        self.shape = shape
         self.block_positions = tetrominos[shape]['shape']
         self.colour = tetrominos[shape]['colour']
         self.create_new_tetromino = create_new_tetromino
@@ -126,3 +160,19 @@ class Tetromino:
     def next_move_vertical_collide(self, blocks, amount):
         collision_list = [block.vertical_collide(int(block.pos.y + amount), self.field_data) for block in self.blocks]
         return True if any(collision_list) else False
+    
+    def rotate(self):
+        if self.shape != '0':
+            pivot_pos = self.blocks[0].pos
+            new_block_positions = [block.rotate(pivot_pos) for block in self.blocks]
+
+            for pos in new_block_positions:
+                if pos.x < 0 or pos.x >= collumns:
+                    return
+                if self.field_data[int(pos.y)][int(pos.x)]:
+                    return
+                if pos.y > rows:
+                    return
+
+            for i, block in enumerate(self.blocks):
+                block.pos = new_block_positions[i]

@@ -17,7 +17,7 @@ window_width = game_width + sidebar_width + padding * 3
 window_height = game_height + padding * 2
 
 # Game behaviour
-update_start_speed = 800
+update_start_speed = 400
 move_wait_time = 200
 rotate_wait_time = 200
 block_offset = pygame.Vector2(collumns // 2, -1)
