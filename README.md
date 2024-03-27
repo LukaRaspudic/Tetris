@@ -21,7 +21,7 @@ self.font = pygame.font.Font("ADD YOUR FILE PATH FOR THE FONT IN THE IMAGES FOLD
 The below example is what I use for the file path on my machine.
 
 ```python
-self.font = pygame.font.Font("/workspace/github.com/Revan68/Tetris/images/pixel-operator.ttf", 30)
+self.font = pygame.font.Font("/workspace/github.com/LukaRaspudic/Tetris/images/pixel-operator.ttf", 30)
 ```
 In preview.py on line 12, you will have to reapeat the steps above by updating the file path for images. See below examples.
 
@@ -31,7 +31,7 @@ self.shape_surfaces = {shape: load(f'ADD YOUR FILE PATH HERE THAT LEADS TO IMAGE
 The below example is what I use for the file path on my machine.
 
 ```python
-self.shape_surfaces = {shape: load(f'/workspace/github.com/Revan68/Tetris/images/{shape}.png').convert_alpha() for shape in tetrominos.keys()}
+self.shape_surfaces = {shape: load(f'/workspace/github.com/LukaRaspudic/Tetris/images/{shape}.png').convert_alpha() for shape in tetrominos.keys()}
 ```
 
 ## Run main.py in terminal
@@ -74,7 +74,7 @@ self.font = pygame.font.Font("ADD YOUR FILE PATH FOR THE FONT IN THE IMAGES FOLD
 The below example is what I use for the file path on my machine.
 
 ```python
-self.font = pygame.font.Font("/workspace/github.com/Revan68/Tetris/images/pixel-operator.ttf", 30)
+self.font = pygame.font.Font("/workspace/github.com/LukaRaspudic/Tetris/images/pixel-operator.ttf", 30)
 ```
 In preview.py on line 12, you will have to reapeat the steps above by updating the file path for images. See below examples.
 
@@ -84,7 +84,7 @@ self.shape_surfaces = {shape: load(f'ADD YOUR FILE PATH HERE THAT LEADS TO IMAGE
 The below example is what I use for the file path on my machine.
 
 ```python
-self.shape_surfaces = {shape: load(f'/workspace/github.com/Revan68/Tetris/images/{shape}.png').convert_alpha() for shape in tetrominos.keys()}
+self.shape_surfaces = {shape: load(f'/workspace/github.com/LukaRaspudic/Tetris/images/{shape}.png').convert_alpha() for shape in tetrominos.keys()}
 ```
 
 ### Run the project
